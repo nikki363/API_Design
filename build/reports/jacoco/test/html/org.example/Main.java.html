@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Main.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">API_test</a> &gt; <a href="index.source.html" class="el_package">org.example</a> &gt; <span class="el_source">Main.java</span></div><h1>Main.java</h1><pre class="source lang-java linenums">package org.example;
+
+import com.google.gson.Gson;
+import org.json.JSONObject;
+
+import java.util.*;
+
+import static spark.Spark.*;
+
+<span class="nc" id="L10">public class Main {</span>
+    public static void main(String[] args) {
+<span class="fc" id="L12">        HashMap &lt;Integer, Event&gt; db = new HashMap&lt;Integer,Event&gt;();</span>
+<span class="fc" id="L13">        db.put(1, new Event(1,9,10,2022,1,1));</span>
+<span class="fc" id="L14">        db.put(2, new Event(2,6,10,2022,2,2));</span>
+<span class="fc" id="L15">        port(8080);</span>
+<span class="fc" id="L16">        get(&quot;/currentdate&quot;, (req, res)-&gt;{</span>
+<span class="fc" id="L17">            res.type(&quot;application/json&quot;);</span>
+<span class="fc" id="L18">            return new JSONObject().put(&quot;date&quot;, Calendar.getInstance().get(Calendar.DATE));</span>
+        });
+
+<span class="fc" id="L21">        get(&quot;/currentday&quot;, (req, res)-&gt;{</span>
+<span class="fc" id="L22">            res.type(&quot;application/json&quot;);</span>
+<span class="fc" id="L23">            return new JSONObject().put(&quot;day&quot;, Calendar.getInstance().get(Calendar.DAY_OF_WEEK));</span>
+        });
+
+<span class="fc" id="L26">        get(&quot;/currentmonth&quot;, (req, res)-&gt;{</span>
+<span class="fc" id="L27">            res.type(&quot;application/json&quot;);</span>
+<span class="fc" id="L28">            return new JSONObject().put(&quot;month&quot;, Calendar.getInstance().get(Calendar.MONTH));</span>
+        });
+
+<span class="fc" id="L31">        get(&quot;/currentyear&quot;, (req, res)-&gt;{</span>
+<span class="fc" id="L32">            res.type(&quot;application/json&quot;);</span>
+<span class="fc" id="L33">            return new JSONObject().put(&quot;year&quot;, Calendar.getInstance().get(Calendar.YEAR));</span>
+        });
+
+<span class="fc" id="L36">        post(&quot;/event&quot;, (req, res) -&gt; {</span>
+<span class="fc" id="L37">            res.type(&quot;application/json&quot;);</span>
+<span class="fc" id="L38">            JSONObject request = new JSONObject(req.body());</span>
+<span class="fc" id="L39">            Event newEvent = new Event(request.getInt(&quot;EventID&quot;),request.getInt(&quot;patientId&quot;),request.getInt(&quot;doctorId&quot;),request.getInt(&quot;date&quot;),request.getInt(&quot;month&quot;),request.getInt(&quot;year&quot;));</span>
+<span class="fc" id="L40">            db.put(newEvent.eventId, newEvent);</span>
+<span class="fc" id="L41">            res.status(201);</span>
+<span class="fc" id="L42">            return new JSONObject().put(&quot;success&quot;, &quot;Event added!&quot;);</span>
+        });
+
+<span class="fc" id="L45">        put(&quot;/event/:eventID&quot;, (req, res) -&gt; {</span>
+<span class="fc" id="L46">            res.type(&quot;application/json&quot;);</span>
+<span class="fc" id="L47">            JSONObject request = new JSONObject(req.body());</span>
+<span class="fc" id="L48">            Event updatedEvent = new Event(request.getInt(&quot;EventID&quot;),request.getInt(&quot;patientId&quot;),request.getInt(&quot;doctorId&quot;),request.getInt(&quot;date&quot;),request.getInt(&quot;month&quot;),request.getInt(&quot;year&quot;));</span>
+<span class="fc" id="L49">            db.put(Integer.valueOf(req.params(&quot;eventID&quot;)), updatedEvent);</span>
+<span class="fc" id="L50">            res.status(200);</span>
+<span class="fc" id="L51">            return new JSONObject().put(&quot;success&quot;, &quot;Updated the Event!&quot;);</span>
+        });
+
+<span class="fc" id="L54">        delete(&quot;/event/:eventID&quot;, (req, res) -&gt; {</span>
+<span class="fc" id="L55">            res.type(&quot;application/json&quot;);</span>
+<span class="fc" id="L56">            db.remove(Integer.valueOf(req.params(&quot;eventID&quot;)));</span>
+<span class="fc" id="L57">            res.status(200);</span>
+<span class="fc" id="L58">            return new JSONObject().put(&quot;success&quot;, &quot;Deleted the Event!&quot;);</span>
+        });
+
+<span class="fc" id="L61">        get(&quot;/event&quot;, (req, res)-&gt;{</span>
+<span class="fc" id="L62">            res.type(&quot;application/json&quot;);</span>
+<span class="fc" id="L63">            ArrayList&lt;Event&gt; events = new ArrayList&lt;Event&gt;();</span>
+<span class="fc" id="L64">            db.get(Integer.valueOf(req.queryParams(&quot;date&quot;)));</span>
+<span class="fc" id="L65">            Iterator dbIterator = db.entrySet().iterator();</span>
+<span class="fc bfc" id="L66" title="All 2 branches covered.">            while (dbIterator.hasNext()) {</span>
+<span class="fc" id="L67">                Map.Entry mapElement</span>
+<span class="fc" id="L68">                        = (Map.Entry)dbIterator.next();</span>
+<span class="fc" id="L69">                Event event = (Event)mapElement.getValue() ;</span>
+<span class="pc bpc" id="L70" title="2 of 6 branches missed.">                if((event.date == Integer.valueOf(req.queryParams(&quot;date&quot;))) &amp;&amp; (event.month == Integer.valueOf(req.queryParams(&quot;month&quot;))) &amp;&amp; (event.year == Integer.valueOf(req.queryParams(&quot;year&quot;)))) {</span>
+<span class="nc" id="L71">                    events.add(event);</span>
+                }
+<span class="fc" id="L73">            }</span>
+<span class="fc" id="L74">            String json = new Gson().toJson(events);</span>
+<span class="fc" id="L75">            return new JSONObject().put(&quot;eventlist&quot;, json);</span>
+        });
+<span class="fc" id="L77">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>
