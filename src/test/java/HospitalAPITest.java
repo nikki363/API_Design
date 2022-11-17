@@ -1,4 +1,4 @@
-import org.example.Main;
+import org.example.HospitalAPI;
 import org.json.JSONObject;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -10,14 +10,14 @@ import static io.restassured.RestAssured.when;
 import static org.hamcrest.core.IsEqual.equalTo;
 
 
-public class MainTest {
+public class HospitalAPITest {
 
     @BeforeAll
     public static void setup() {
-        Main.main(null);
+        HospitalAPI.main(null);
     }
 
-    @Test
+    @Test // Happy test case for getting current date
     void testCurrentDatePass() {
         Calendar calendar = Calendar.getInstance();
         when().
@@ -27,7 +27,7 @@ public class MainTest {
 
     }
 
-    @Test
+    @Test // unHappy test case for getting current date
     void testCurrentDateFail() {
         Calendar calendar = Calendar.getInstance();
         when().
@@ -37,7 +37,7 @@ public class MainTest {
 
     }
 
-    @Test
+    @Test // Happy test case for getting current day
     void testCurrentDayPass() {
         Calendar calendar = Calendar.getInstance();
         when().
@@ -47,7 +47,7 @@ public class MainTest {
 
     }
 
-    @Test
+    @Test ////unHappy test case for getting current day
     void testCurrentDayFail() {
         Calendar calendar = Calendar.getInstance();
         when().
@@ -56,7 +56,7 @@ public class MainTest {
                 statusCode(404);
 
     }
-    @Test
+    @Test // Happy test case for getting current month
     void testCurrentMonthPass() {
         Calendar calendar = Calendar.getInstance();
         when().
@@ -66,7 +66,7 @@ public class MainTest {
 
     }
 
-    @Test
+    @Test // unHappy test case for getting current month
     void testCurrentMonthFail() {
         Calendar calendar = Calendar.getInstance();
         when().
@@ -76,7 +76,7 @@ public class MainTest {
 
     }
 
-    @Test
+    @Test // Happy test case for getting current year
     void testCurrentYearPass() {
         Calendar calendar = Calendar.getInstance();
         when().
@@ -86,7 +86,7 @@ public class MainTest {
 
     }
 
-    @Test
+    @Test // unHappy test case for getting current year
     void testCurrentYearFail() {
         Calendar calendar = Calendar.getInstance();
         when().
@@ -96,7 +96,7 @@ public class MainTest {
 
     }
 
-    @Test
+    @Test // Happy test case for adding an event
     void testPostEventPass() {
         JSONObject parameters = new JSONObject();
         parameters.put("date", "9");
@@ -111,7 +111,7 @@ public class MainTest {
 
     }
 
-    @Test
+    @Test // unHappy test case for adding an event
     void testPostEventFail() {
         JSONObject parameters = new JSONObject();
         parameters.put("date", "9");
@@ -128,7 +128,7 @@ public class MainTest {
     }
 
 
-    @Test
+    @Test // Happy test case for updating an event
     void testPutEventPass() {
         JSONObject parameters = new JSONObject();
         parameters.put("date", "9");
@@ -144,7 +144,7 @@ public class MainTest {
 
     }
 
-    @Test
+    @Test // unHappy test case for updating an event
     void testPutEventFail() {
         JSONObject parameters = new JSONObject();
         parameters.put("date", "9");
@@ -162,7 +162,7 @@ public class MainTest {
 
     }
 
-    @Test
+    @Test // Happy test case for deleting an event
     void testDeleteEventPass() {
 
         when().
@@ -170,7 +170,7 @@ public class MainTest {
                 statusCode(200).body("success",equalTo("Deleted the Event!"));
 
     }
-    @Test
+    @Test // unHappy test case for deleting an event
     void testDeleteEVentFail() {
 
         when().
@@ -179,7 +179,7 @@ public class MainTest {
 
     }
 
-    @Test
+    @Test // Happy test case for getting all events on particular given date
     void testGetEventsforDatePass() {
         given().
                 param("date", "9").
@@ -191,7 +191,7 @@ public class MainTest {
 
     }
 
-    @Test
+    @Test // unHappy test case for getting all events on particular given date
     void testGetEventsforDateFail() {
         given().
                 param("date", "9").

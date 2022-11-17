@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="HospitalAPITest" tests="16" skipped="0" failures="0" errors="0" timestamp="2022-11-17T04:28:31" hostname="nikithas-mbp.wifi.local.cmu.edu" time="1.411">
+  <properties/>
+  <testcase name="testGetEventsforDateFail()" classname="HospitalAPITest" time="0.966"/>
+  <testcase name="testGetEventsforDatePass()" classname="HospitalAPITest" time="0.034"/>
+  <testcase name="testCurrentDayFail()" classname="HospitalAPITest" time="0.005"/>
+  <testcase name="testCurrentDayPass()" classname="HospitalAPITest" time="0.306"/>
+  <testcase name="testCurrentMonthFail()" classname="HospitalAPITest" time="0.005"/>
+  <testcase name="testCurrentMonthPass()" classname="HospitalAPITest" time="0.01"/>
+  <testcase name="testPutEventFail()" classname="HospitalAPITest" time="0.018"/>
+  <testcase name="testPutEventPass()" classname="HospitalAPITest" time="0.012"/>
+  <testcase name="testCurrentDateFail()" classname="HospitalAPITest" time="0.004"/>
+  <testcase name="testCurrentDatePass()" classname="HospitalAPITest" time="0.008"/>
+  <testcase name="testCurrentYearFail()" classname="HospitalAPITest" time="0.003"/>
+  <testcase name="testCurrentYearPass()" classname="HospitalAPITest" time="0.008"/>
+  <testcase name="testDeleteEventPass()" classname="HospitalAPITest" time="0.009"/>
+  <testcase name="testDeleteEVentFail()" classname="HospitalAPITest" time="0.004"/>
+  <testcase name="testPostEventFail()" classname="HospitalAPITest" time="0.007"/>
+  <testcase name="testPostEventPass()" classname="HospitalAPITest" time="0.008"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[SLF4J: Failed to load class "org.slf4j.impl.StaticLoggerBinder".
+SLF4J: Defaulting to no-operation (NOP) logger implementation
+SLF4J: See http://www.slf4j.org/codes.html#StaticLoggerBinder for further details.
+]]></system-err>
+</testsuite>
